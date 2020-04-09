@@ -17,8 +17,10 @@ import io.netty.handler.logging.LoggingHandler;
 public class SubReqServer {
 
     public static void main(String[] args) {
-        EventLoopGroup work = new NioEventLoopGroup(2) ;
+
         EventLoopGroup boss = new NioEventLoopGroup(1) ;
+        EventLoopGroup work = new NioEventLoopGroup(2) ;
+
         ServerBootstrap server = new ServerBootstrap() ;
 
         server.group(boss,work)
@@ -51,12 +53,6 @@ public class SubReqServer {
 }
 
 class SubReqServerHanlder extends ChannelInboundHandlerAdapter{
-
-
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-
-    }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
