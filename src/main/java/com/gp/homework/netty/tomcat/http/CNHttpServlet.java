@@ -9,10 +9,10 @@ public abstract class CNHttpServlet {
         //由service方法来决定，是调用doGet或者调用doPost
         if("GET".equalsIgnoreCase(request.getMethod())){
             doGet(request, response);
-        }else{
+        }
+        else{
             doPost(request, response);
         }
-
     }
 
     public abstract void doGet(CNHttpRequest request,CNHttpResponse response) throws Exception;
