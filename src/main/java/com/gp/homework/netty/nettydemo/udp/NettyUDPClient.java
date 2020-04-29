@@ -25,7 +25,7 @@ public class NettyUDPClient {
         try {
             Channel channel = bootstrap.bind(0).channel() ;
             channel.writeAndFlush(new DatagramPacket(Unpooled.copiedBuffer("查询",CharsetUtil.UTF_8),
-                    new InetSocketAddress("255.255.255.255",8800)))
+                    new InetSocketAddress("127.0.0.1",8800)))
                     .sync() ;
 
             if(!channel.closeFuture().await(15000)){
