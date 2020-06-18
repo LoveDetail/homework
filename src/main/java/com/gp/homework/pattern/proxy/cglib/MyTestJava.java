@@ -1,27 +1,27 @@
 package com.gp.homework.pattern.proxy.cglib;
 
-import com.gp.homework.pattern.proxy.FatherTom;
-import com.gp.homework.pattern.proxy.Person;
-import com.gp.homework.pattern.proxy.myproxy.WayneCglibProxy;
-import com.gp.homework.pattern.proxy.myproxy.WayneJDKProxy;
+import cn.hutool.core.util.StrUtil;
+import com.gp.homework.domain.entity.TestUsers;
 
 public class MyTestJava {
 	
 	public static void main(String[] args) {
 
 
-		System.out.println(System.getProperty("line.separator"));
+		TestUsers users1 = new TestUsers() ;
+		users1.setNick_name("en!!!~~");
+		users1.setPassword("da");
+		users1.setUser_sex("2");
+		users1.setUsername("Fruit");
 
 
-//		Person p1 = (Person)new WayneJDKProxy().newInstance(new FatherTom()) ;
-//		p1.takeCareOfBaby("橙子", "小海马");
-//
-//		System.out.println("======================================================================");
-//
-//		Person p2 = new WayneCglibProxy<Person>().newInstance(FatherTom.class) ;
-//		p2.takeCareOfBaby("orange", "tangdoudou");
-		
-		
+		TestUsers users2 = users1.clone() ;
+
+		users2.setNick_name("果宝");
+
+		System.out.println(StrUtil.format("{}*********{}", users1.getNick_name(), users2.getNick_name()));
+
+
 	}
 
 }

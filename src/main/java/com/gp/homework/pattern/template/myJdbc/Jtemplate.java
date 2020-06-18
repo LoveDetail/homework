@@ -1,14 +1,13 @@
 package com.gp.homework.pattern.template.myJdbc;
 
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.sql.DataSource;
 
 
 public abstract class Jtemplate {
@@ -27,7 +26,7 @@ public abstract class Jtemplate {
 		PreparedStatement state = this.getStatement(conn, sql) ;
 		ResultSet rs = this.getResultSet(state) ;
 		
-		List<?> list = this.querySql(rs, mapper, 0) ;
+		List<?> list = this.querySql(rs, mapper) ;
 		
 		this.clossAll(rs, state, conn);
 		
@@ -47,13 +46,12 @@ public abstract class Jtemplate {
 		return statement.executeQuery();
 	}
 	
-	private List<?> querySql(ResultSet rs,WayneMapper<?> mapper,int indexNum) throws SQLException{
+	private List<?> querySql(ResultSet rs,WayneMapper<?> mapper) throws SQLException{
 		
 		List<Object> list = new ArrayList<>() ;
 		
-		int rowNum = 1;
         while (rs.next()){
-        	list.add(mapper.mapper(rs,rowNum ++));
+        	list.add(mapper.mapper(rs));
         }
         return list;
 	}

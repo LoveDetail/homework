@@ -13,7 +13,7 @@ public class LockDemo {
 
     public static void main(String[] args) {
         CuratorFramework curatorFramework = CuratorFrameworkFactory.builder().
-                connectString("192.168.2.76:2181").sessionTimeoutMs(50000000).
+                connectString("121.36.48.218:2080").sessionTimeoutMs(50000000).
                 retryPolicy(new ExponentialBackoffRetry(1000, 3)).build();
         curatorFramework.start();
 

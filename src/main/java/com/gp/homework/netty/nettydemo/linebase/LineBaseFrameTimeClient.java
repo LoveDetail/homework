@@ -58,9 +58,8 @@ class LineBaseFrameTimeHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
-        ByteBuf message = null ;
         for(int i=0; i<100; i++){
-            message = Unpooled.buffer(req.length) ;
+            ByteBuf message = Unpooled.buffer(req.length) ;
             message.writeBytes(req) ;
             ctx.writeAndFlush(message) ;
         }

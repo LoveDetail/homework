@@ -3,13 +3,13 @@ package com.gp.homework.controller;
 import cn.hutool.core.util.StrUtil;
 import com.gp.homework.callback.ClientRequest;
 import com.gp.homework.common.CommonTimeCache;
+import com.gp.homework.domain.entity.Materiel;
+import com.gp.homework.domain.mapper.MyTestMapper;
 import com.gp.homework.event.myevent.SalesTrnasEventPusher;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,11 +19,18 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/test")
 public class MyTestController {
 
-    SalesTrnasEventPusher eventDemoPublish ;
 
     @Autowired
-    public void setEventDemoPublish(SalesTrnasEventPusher eventDemoPublish) {
-        this.eventDemoPublish = eventDemoPublish;
+    MyTestMapper myTestMapper ;
+
+    @Autowired
+    SalesTrnasEventPusher eventDemoPublish ;
+
+
+
+    @GetMapping("/m")
+    public List<Materiel> MyTestMapper(){
+        return myTestMapper.queryMateriel() ;
     }
 
     @GetMapping("/push/{userName}")
@@ -75,6 +82,11 @@ public class MyTestController {
         }
         System.out.println(StrUtil.format("召测失败"));
 
+    }
+
+    @Autowired
+    public void ss(){
+        System.out.println("我是增加了@Component注解的并且加了@Autowired的方法!!!!!!!!!!!!!!!!!!!!!");
     }
 
 }

@@ -5,11 +5,9 @@ import lombok.Cleanup;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Objects;
 
 @SuppressWarnings(value="unused")
@@ -21,7 +19,7 @@ public class GetField {
 		String password = "abc123" ;
 
 		//获取数据表的字段，用来生成DTO的变量 
-		getDateBaseField(JdbcUrlEnum.MYSQLDRIVER8,username,password,"SELECT * FROM materiel LIMIT 0") ;
+		getDateBaseField(JdbcUrlEnum.MYSQLDRIVER8,username,password,"SELECT * FROM users LIMIT 0") ;
 //		getDateBaseField(JdbcUrlEnum.SQLSERVER_MICROSOFT,username,password,"select top 0 * from test") ;
 		
 		//生成insert语句
@@ -34,6 +32,7 @@ public class GetField {
 
 
 		Class.forName(E.DRIVER) ;
+
 		@Cleanup ResultSet rs = DriverManager.getConnection(E.URL,username,password).createStatement().executeQuery(sql) ;
 			
 		for(int i=1; i<= rs.getMetaData().getColumnCount();i++)
@@ -46,11 +45,8 @@ public class GetField {
 		
 		Class.forName(E.DRIVER) ;
 		
-		@Cleanup Connection conn = DriverManager.getConnection(E.URL, username,password) ;
-		@Cleanup Statement sa = conn.createStatement() ;
-		@Cleanup ResultSet rs = sa.executeQuery(sql) ;
-		
-		
+		@Cleanup ResultSet rs = DriverManager.getConnection(E.URL, username,password).createStatement().executeQuery(sql) ;
+
 		StringBuilder insertStr = new StringBuilder() ;
 		StringBuilder valueStr = new StringBuilder() ;
 		
@@ -119,12 +115,13 @@ public class GetField {
 	@SuppressWarnings(value="unused")
 	private enum JdbcUrlEnum{
 		MYSQLDRIVER5("jdbc:mysql://localhost:3306/bstemp?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true","com.mysql.jdbc.Driver"),
-		MYSQLDRIVER8("jdbc:mysql://localhost:3306/bstemp?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8","com.mysql.cj.jdbc.Driver"),
+		MYSQLDRIVER8("jdbc:mysql://localhost:3306/wayne?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8","com.mysql.cj.jdbc.Driver"),
 
 		SQLSERVER_MICROSOFT("jdbc:sqlserver://192.168.2.82:1433;DatabaseName=YC5","com.microsoft.sqlserver.jdbc.SQLServerDriver"),
-		SQLSERVER_JTDS("jdbc:jtds://192.168.2.82:1433;DatabaseName=YC5","net.sourceforge.jtds.jdbc.Driver")
+		SQLSERVER_JTDS("jdbc:jtds://192.168.2.82:1433;DatabaseName=YC5","net.sourceforge.jtds.jdbc.Driver"),
 
-		;
+		ORACLEDRIVER_OJDBC8("jdbc:oracle:thin:@192.168.2.124:1521/orcl","oracle.jdbc.OracleDriver") ;
+
 
 		public String URL ;
 		public String DRIVER;

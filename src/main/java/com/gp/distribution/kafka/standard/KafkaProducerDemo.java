@@ -14,7 +14,7 @@ public class KafkaProducerDemo extends Thread{
 
     public KafkaProducerDemo(String topic,boolean isAysnc){
         Properties properties=new Properties();
-        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.2.76:9092");
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "121.36.48.218:8082");
         properties.put(ProducerConfig.CLIENT_ID_CONFIG,"KafkaProducerDemo");
         properties.put(ProducerConfig.ACKS_CONFIG,"-1");
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.IntegerSerializer");
