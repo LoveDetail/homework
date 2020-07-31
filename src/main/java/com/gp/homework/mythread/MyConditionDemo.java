@@ -15,13 +15,10 @@ public class MyConditionDemo {
     private static ReentrantLock lock = new ReentrantLock();
     private static int number ;
 
-
     public static void main(String[] args) {
-        OddEvenNumber number = new OddEvenNumber() ;
-        new Thread(()-> number.odd(),"Thread-odd").start();
-        new Thread(()-> number.even(),"Thread-even").start();
+        new Thread(OddEvenNumber :: odd,"Thread-oodd").start();
+        new Thread(OddEvenNumber :: even,"Thread-even").start();
     }
-
 
     private static boolean isOdd(int number){
         return (number & 1) == 1;

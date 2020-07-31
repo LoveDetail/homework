@@ -1,6 +1,7 @@
 package com.gp.homework.mythread;
 
 import cn.hutool.core.util.StrUtil;
+import lombok.SneakyThrows;
 
 import java.util.concurrent.TimeUnit;
 
@@ -25,25 +26,18 @@ public class MyNotifyDemo {
    static class OddEventNumber {
 
 
+        @SneakyThrows
         public synchronized void odd()  {
 
             while (true){
                 if(isOdd){
                     System.out.println(StrUtil.format("threadName::::{} ===> {}",Thread.currentThread().getName(),number++));
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    TimeUnit.SECONDS.sleep(1);
                     isOdd = false ;
                     notify() ;
                 }
                 else{
-                    try {
-                        wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                  wait();
                 }
             }
         }
