@@ -2,6 +2,7 @@ package com.gp.homework.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Create by Wayne on 2020/6/11
@@ -9,6 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@ToString
 public class TestUsers implements Cloneable{
     private Integer id ;
     private String username ;

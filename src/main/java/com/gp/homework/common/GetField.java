@@ -15,16 +15,16 @@ public class GetField {
 	
 	public static void main(String args[]) throws ClassNotFoundException, SQLException, IOException {
 
-		String username = "root" ;
+		String username = "wayne" ;
 		String password = "abc123" ;
 
 		//获取数据表的字段，用来生成DTO的变量 
-		getDateBaseField(JdbcUrlEnum.MYSQLDRIVER8,username,password,"SELECT * FROM users LIMIT 0") ;
+//		getDateBaseField(JdbcUrlEnum.MYSQLDRIVER8,username,password,"SELECT * FROM dic LIMIT 0") ;
 //		getDateBaseField(JdbcUrlEnum.SQLSERVER_MICROSOFT,username,password,"select top 0 * from test") ;
 		
 		//生成insert语句
-//		String sql = "SELECT a.omocd stcd,a.omonm stnm,b.sttp,'0' ptype,b.rvnm,b.hnnm,b.bsnm,a.lgtd,a.lttd,a.address stlc,'13000002' sunit,'130000' addvcd,'1900-01-01' esstym,'' pnumber,IFNULL(b.FRGRD,'0') FRGRD ,'' comments,'1900-01-01' optm,'' sub_create,'heBeiService02' sub_serviceId,a.omoid sub_omoid,a.stid sub_stid,'0' sub_transType,'http://219.148.51.67:8455' sub_host FROM ioms_omo_b a INNER JOIN ioms_stbprp_b b ON a.omoid = b.omoid" ;
-//		sql2Insert(JdbcUrlEnum.MYSQLDRIVER8, username,password,"ioms_stbprp_b.sql","ioms_stbprp_b", "SELECT '19841123' omoid,STCD,STTP,FRGRD,RVNM,BSNM,HNNM,BGFRYM,ESSTYM,STAZT,STATUS,OPERATOR FROM ioms_stbprp_b") ;
+//		String sql = "" ;
+		sql2Insert(JdbcUrlEnum.MYSQLDRIVER8, username,password,"ioms_stbprp_b.sql","ioms_stbprp_b", "SELECT '19841123' omoid,STCD,STTP,FRGRD,RVNM,BSNM,HNNM,BGFRYM,ESSTYM,STAZT,STATUS,OPERATOR FROM ioms_stbprp_b") ;
 
 	}
 	
@@ -115,7 +115,7 @@ public class GetField {
 	@SuppressWarnings(value="unused")
 	private enum JdbcUrlEnum{
 		MYSQLDRIVER5("jdbc:mysql://localhost:3306/bstemp?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true","com.mysql.jdbc.Driver"),
-		MYSQLDRIVER8("jdbc:mysql://localhost:3306/wayne?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8","com.mysql.cj.jdbc.Driver"),
+		MYSQLDRIVER8("jdbc:mysql://192.168.0.32:711/yc?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8","com.mysql.cj.jdbc.Driver"),
 
 		SQLSERVER_MICROSOFT("jdbc:sqlserver://192.168.2.82:1433;DatabaseName=YC5","com.microsoft.sqlserver.jdbc.SQLServerDriver"),
 		SQLSERVER_JTDS("jdbc:jtds://192.168.2.82:1433;DatabaseName=YC5","net.sourceforge.jtds.jdbc.Driver"),

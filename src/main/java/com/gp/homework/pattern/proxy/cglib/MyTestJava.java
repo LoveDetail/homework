@@ -1,27 +1,39 @@
 package com.gp.homework.pattern.proxy.cglib;
 
-import cn.hutool.core.util.StrUtil;
-import com.gp.homework.domain.entity.TestUsers;
+import java.util.Comparator;
 
 public class MyTestJava {
-	
+
+	private static int diff = -100 ;
+
+	private static String testStr = "Liliwei" ;
+
 	public static void main(String[] args) {
 
 
-		TestUsers users1 = new TestUsers() ;
-		users1.setNick_name("en!!!~~");
-		users1.setPassword("da");
-		users1.setUser_sex("2");
-		users1.setUsername("Fruit");
+		System.out.println(diff > 0 ? 1 : diff == 0 ? 0 : -1);
 
+		System.out.println(testStr.equals("A") ? "right" : testStr.equals("Liliwei") ? "wrong" : "noResult");
 
-		TestUsers users2 = users1.clone() ;
-
-		users2.setNick_name("果宝");
-
-		System.out.println(StrUtil.format("{}*********{}", users1.getNick_name(), users2.getNick_name()));
-
+		CompareObject compare = new CompareObject() ;
+		System.out.println(compare.compare(1, 2));
 
 	}
 
+}
+
+class CompareObject implements Comparator<Integer>,Comparable{
+
+	@Override
+	public int compare(Integer o1, Integer o2) {
+		return o1-o2 > 0 ? 1 : -1;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		if(o == null) return 0 ;
+		if (this.equals(o)) return 0 ;
+
+		return this.hashCode() - o.hashCode();
+	}
 }
