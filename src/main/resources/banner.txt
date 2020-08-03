@@ -1,0 +1,12 @@
+┌────────────────────────────────────────────────────────────────────┐
+│                          MobaXterm 20.2                            │
+│            (SSH client, X-server and networking tools)             │
+│                                                                    │
+│  SSH session to wayne@121.36.48.218                                │
+│   · SSH compression √ :                                            │
+│   · SSH-browser     √ :                                            │
+│   · X11-forwarding  × :  (disabled or not supported by server)     │
+│   · DISPLAY           : 192.168.2.52:0.0                           │
+│                                   ::::::::::Liliwei                │
+│   For more info, ctrl+click on help or visit our website           │
+└────────────────────────────────────────────────────────────────────┘
