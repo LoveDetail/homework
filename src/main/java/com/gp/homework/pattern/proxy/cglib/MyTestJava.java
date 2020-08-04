@@ -11,6 +11,8 @@ public class MyTestJava {
 	public static void main(String[] args) {
 
 
+
+
 		System.out.println(diff > 0 ? 1 : diff == 0 ? 0 : -1);
 
 		System.out.println(testStr.equals("A") ? "right" : testStr.equals("Liliwei") ? "wrong" : "noResult");

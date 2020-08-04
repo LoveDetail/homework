@@ -23,7 +23,7 @@ public class SubcribeKafkaConsumer {
 
     static{
         Properties properties=new Properties();
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.2.61:9092");
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "121.36.48.218:9092");
         properties.put(ConsumerConfig.GROUP_ID_CONFIG,"KafkaConsumerDemo1");
         properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG,false);
         properties.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG,"1000");

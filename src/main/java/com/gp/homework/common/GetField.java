@@ -16,15 +16,15 @@ public class GetField {
 	public static void main(String args[]) throws ClassNotFoundException, SQLException, IOException {
 
 		String username = "wayne" ;
-		String password = "abc123" ;
+		String password = "Wayne)&11" ;
 
 		//获取数据表的字段，用来生成DTO的变量 
-//		getDateBaseField(JdbcUrlEnum.MYSQLDRIVER8,username,password,"SELECT * FROM dic LIMIT 0") ;
+		getDateBaseField(JdbcUrlEnum.MYSQLDRIVER8,username,password,"SELECT * FROM user LIMIT 0") ;
 //		getDateBaseField(JdbcUrlEnum.SQLSERVER_MICROSOFT,username,password,"select top 0 * from test") ;
 		
 		//生成insert语句
 //		String sql = "" ;
-		sql2Insert(JdbcUrlEnum.MYSQLDRIVER8, username,password,"ioms_stbprp_b.sql","ioms_stbprp_b", "SELECT '19841123' omoid,STCD,STTP,FRGRD,RVNM,BSNM,HNNM,BGFRYM,ESSTYM,STAZT,STATUS,OPERATOR FROM ioms_stbprp_b") ;
+//		sql2Insert(JdbcUrlEnum.MYSQLDRIVER8, username,password,"ioms_stbprp_b.sql","ioms_stbprp_b", "SELECT '19841123' omoid,STCD,STTP,FRGRD,RVNM,BSNM,HNNM,BGFRYM,ESSTYM,STAZT,STATUS,OPERATOR FROM ioms_stbprp_b") ;
 
 	}
 	
@@ -98,24 +98,18 @@ public class GetField {
 	
 	private static void wrightTxt(String s,String fileName) throws IOException{
 
-		@Cleanup FileWriter fileWriter=new FileWriter("D:\\"+fileName,true);
-		   int [] a=new int[]{11112,222,333,444,555,666};
-		   
-//		   for(String s : sqls){
-			   fileWriter.write(s+" \r\n");
-//		   }
-		   
-//		   for (int i = 0; i < a.length; i++) {
-//		    fileWriter.write(String.valueOf(a[i])+" ");
-//		     }
-		   fileWriter.flush();
+		@Cleanup
+		FileWriter fileWriter=new FileWriter("D:\\"+fileName,true);
+
+	    fileWriter.write(s+" \r\n");
+	    fileWriter.flush();
 	}
 	
 
 	@SuppressWarnings(value="unused")
 	private enum JdbcUrlEnum{
 		MYSQLDRIVER5("jdbc:mysql://localhost:3306/bstemp?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true","com.mysql.jdbc.Driver"),
-		MYSQLDRIVER8("jdbc:mysql://192.168.0.32:711/yc?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8","com.mysql.cj.jdbc.Driver"),
+		MYSQLDRIVER8("jdbc:mysql://121.36.48.218:1988/wayne?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8","com.mysql.cj.jdbc.Driver"),
 
 		SQLSERVER_MICROSOFT("jdbc:sqlserver://192.168.2.82:1433;DatabaseName=YC5","com.microsoft.sqlserver.jdbc.SQLServerDriver"),
 		SQLSERVER_JTDS("jdbc:jtds://192.168.2.82:1433;DatabaseName=YC5","net.sourceforge.jtds.jdbc.Driver"),

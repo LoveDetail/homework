@@ -22,7 +22,7 @@ public class SubcrisbeKafkaProducer {
         topicName = "ycLogTopic" ;
 
         Properties properties=new Properties();
-        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.2.61:9092");
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "121.36.48.218:9092");
         properties.put(ProducerConfig.CLIENT_ID_CONFIG,"KafkaProducerDemo");
         properties.put(ProducerConfig.ACKS_CONFIG,"-1");
         properties.put(ProducerConfig.RETRIES_CONFIG,"3") ;
