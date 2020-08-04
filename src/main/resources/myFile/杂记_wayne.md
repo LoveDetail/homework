@@ -1485,6 +1485,396 @@ docker rmi $(docker images -q)
 
 
 
+# 18 Spring系列 
+
+## 18.1 Spring事务
+
+### 18.1.1 spring事务隔离级别
+
+```.
+隔离级别是指若干个并发的事务之间的隔离程度。TransactionDefinition 接口中定义了五个表示隔离级别的常量：
+
+    TransactionDefinition.ISOLATION_DEFAULT：
+    这是默认值，表示使用底层数据库的默认隔离级别。对大部分数据库而言，通常这值就是
+    TransactionDefinition.ISOLATION_READ_COMMITTED。
+
+    TransactionDefinition.ISOLATION_READ_UNCOMMITTED：
+    该隔离级别表示一个事务可以读取另一个事务修改但还没有提交的数据。该级别不能防止脏读，不可重复读和幻读，因此很少使用该隔离级别。比如PostgreSQL实际上并没有此级别。
+
+    TransactionDefinition.ISOLATION_READ_COMMITTED：
+    该隔离级别表示一个事务只能读取另一个事务已经提交的数据。该级别可以防止脏读，这也是大多数情况下的推荐值。
+
+    TransactionDefinition.ISOLATION_REPEATABLE_READ：
+    该隔离级别表示一个事务在整个过程中可以多次重复执行某个查询，并且每次返回的记录都相同。该级别可以防止脏读和不可重复读。
+
+    TransactionDefinition.ISOLATION_SERIALIZABLE：
+    所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。但是这将严重影响程序的性能。通常情况下也不会用到该级别。
+```
+
+
+
+### 18.1.2 spring事务传播行为
+
+```.java
+所谓事务的传播行为是指，如果在开始当前事务之前，一个事务上下文已经存在，此时有若干选项可以指定一个事务性方法的执行行为。在TransactionDefinition定义中包括了如下几个表示传播行为的常量：
+
+    TransactionDefinition.PROPAGATION_REQUIRED：如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。这是默认值。
+    TransactionDefinition.PROPAGATION_REQUIRES_NEW：创建一个新的事务，如果当前存在事务，则把当前事务挂起。
+    TransactionDefinition.PROPAGATION_SUPPORTS：如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。
+    TransactionDefinition.PROPAGATION_NOT_SUPPORTED：以非事务方式运行，如果当前存在事务，则把当前事务挂起。
+    TransactionDefinition.PROPAGATION_NEVER：以非事务方式运行，如果当前存在事务，则抛出异常。
+    TransactionDefinition.PROPAGATION_MANDATORY：如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常。
+    TransactionDefinition.PROPAGATION_NESTED：如果当前存在事务，则创建一个事务作为当前事务的嵌套事务来运行；如果当前没有事务，则该取值等价于TransactionDefinition.PROPAGATION_REQUIRED
+```
+
+
+
+
+
+### 18.1.3 spring事务回滚规则&常用配置
+
+```.java
+	指示spring事务管理器回滚一个事务的推荐方法是在当前事务的上下文内抛出异常。spring事务管理器会捕捉任何未处理的异常，然后依据规则决定是否回滚抛出异常的事务。默认配置下，spring只有在抛出的异常为运行时unchecked异常时才回滚该事务，也就是抛出的异常为RuntimeException的子类(Errors也会导致事务回滚)，而抛出checked异常则不会导致事务回滚。可以明确的配置在抛出那些异常时回滚事务，包括checked异常。也可以明确定义那些异常抛出时不回滚事务。
+	
+```
+
+```.
+事务常用配置
+
+    readOnly：该属性用于设置当前事务是否为只读事务，设置为true表示只读，false则表示可读写，默认值为false。例如：@Transactional(readOnly=true)；
+    
+    rollbackFor：该属性用于设置需要进行回滚的异常类数组，当方法中抛出指定异常数组中的异常时，则进行事务回滚。例如：指定单一异常类：@Transactional(rollbackFor=RuntimeException.class)指定多个异常类：@Transactional(rollbackFor={RuntimeException.class, Exception.class})；
+    
+    rollbackForClassName：该属性用于设置需要进行回滚的异常类名称数组，当方法中抛出指定异常名称数组中的异常时，则进行事务回滚。例如：指定单一异常类名称@Transactional(rollbackForClassName=”RuntimeException”)指定多个异常类名称：@Transactional(rollbackForClassName={“RuntimeException”,”Exception”})。
+    
+    noRollbackFor：该属性用于设置不需要进行回滚的异常类数组，当方法中抛出指定异常数组中的异常时，不进行事务回滚。例如：指定单一异常类：@Transactional(noRollbackFor=RuntimeException.class)指定多个异常类：@Transactional(noRollbackFor={RuntimeException.class, Exception.class})。
+    
+    noRollbackForClassName：该属性用于设置不需要进行回滚的异常类名称数组，当方法中抛出指定异常名称数组中的异常时，不进行事务回滚。例如：指定单一异常类名称：@Transactional(noRollbackForClassName=”RuntimeException”)指定多个异常类名称：@Transactional(noRollbackForClassName={“RuntimeException”,”Exception”})。
+   
+   propagation ：该属性用于设置事务的传播行为。例如：@Transactional(propagation=Propagation.NOT_SUPPORTED,readOnly=true)。
+    
+    isolation：该属性用于设置底层数据库的事务隔离级别，事务隔离级别用于处理多事务并发的情况，通常使用数据库的默认隔离级别即可，基本不需要进行设置。
+   
+   timeout：该属性用于设置事务的超时秒数，默认值为-1表示永不超时。
+```
+
+
+
+### 18.1.4 spring事务注意事项
+
+1. 要根据实际的需求来决定是否要使用事务，最好是在编码之前就考虑好，不然到以后就难以维护；
+2. 如果使用了事务，请务必进行事务测试，因为很多情况下以为事务是生效的，但是实际上可能未生效！
+3. 事物@Transactional的使用要放再类的**公共(public)方法**中，需要注意的是在 protected、private 方法上使用 @Transactional 注解，它也不会报错(IDEA会有提示)，但事务无效。
+4. 事物@Transactional是不会对该方法里面的子方法生效！也就是你在公共方法A声明的事物@Transactional，但是在A方法中有个子方法B和C，其中方法B进行了数据操作，但是该异常被B自己处理了，这样的话事物是不会生效的！反之B方法声明的事物@Transactional，但是公共方法A却未声明事物的话，也是不会生效的！如果想事物生效，需要将子方法的事务控制交给调用的方法，在子方法中使用`rollbackFor`注解指定需要回滚的异常或者将异常抛出交给调用的方法处理。一句话就是在使用事物的异常由调用者进行处理！
+5. 事物@Transactional由spring控制的时候，它会在抛出异常的时候进行回滚。如果自己使用catch捕获了处理了，是不生效的，如果想生效可以进行手动回滚或者在catch里面将异常抛出，比如`throw new RuntimeException();`。
+
+
+
+### 18.1.5 spring事务原理
+
+​		Spring的事务机制是用统一的机制来处理不同数据访问技术的事务处理。Spring的事务机制提供了一个PlatformTransactionManager接口，不同的数据访问技术的事务使用不同的接口实现，如表所示:
+
+
+
+| 实现       | 数据访问技术                 |
+| :--------- | :--------------------------- |
+| JDBC       | DataSourceTransactionManager |
+| JPA        | JapTransactionManager        |
+| Hibernate  | HibernateTransactionManager  |
+| JDO        | JdoTransactionManager        |
+| 分布式事务 | JtaTransactionManager        |
+
+在程序中定义事务管理器的代码如下：
+
+```.java
+@Bean
+public PlatformTransactionManager transactionManager() {
+
+	JpaTransactionManager transactionManager = new JpaTransactionManager();
+	transactionManager.setDataSource(dataSource());
+	return transactionManager;
+}
+```
+
+
+
+|声明式事务
+
+​		Spring支持声名式事务，即使用注解来选择需要使用事务的方法，它使用@Transactional注解在方法上表明该方法需要事务支持。这是一个基于AOP的实现操作。
+
+```.java
+@Transactional
+public void saveSomething(Long  id, String name) {
+    //数据库操作
+}
+```
+
+在此处需要特别注意的是，此@Transactional注解来自org.springframework.transaction.annotation包，而不是javax.transaction。
+
+
+
+|AOP代理的两种实现
+
+- jdk是代理接口，私有方法必然不会存在在接口里，所以就不会被拦截到；
+
+- cglib是子类，private的方法照样不会出现在子类里，也不能被拦截 ;
+
+  
+
+**Java 动态代理如下四个步骤：**
+
+1. 通过实现 InvocationHandler 接口创建自己的调用处理器；
+2. 通过为 Proxy 类指定 ClassLoader 对象和一组 interface 来创建动态代理类；
+3. 通过反射机制获得动态代理类的构造函数，其唯一参数类型是调用处理器接口类型；
+4. 通过构造函数创建动态代理类实例，构造时调用处理器对象作为参数被传入。
+
+
+
+**CGLIB代理：**
+
+​		cglib（Code Generation Library）是一个强大的,高性能,高质量的Code生成类库。它可以在运行期扩展Java类与实现Java接口。
+
+- cglib封装了asm，可以在运行期动态生成新的class（**子类**）。
+- cglib用于AOP，jdk中的proxy必须基于接口，cglib却没有这个限制。
+
+**原理区别：**
+
+```.java
+java动态代理是利用反射机制生成一个实现代理接口的匿名类，在调用具体方法前调用InvokeHandler来处理。而cglib动态代理是利用asm开源包，对代理对象类的class文件加载进来，通过修改其字节码生成子类来处理。
+
+    如果目标对象实现了接口，默认情况下会采用JDK的动态代理实现AOP
+    如果目标对象实现了接口，可以强制使用CGLIB实现AOP
+    如果目标对象没有实现了接口，必须采用CGLIB库，spring会自动在JDK动态代理和CGLIB之间转换
+```
+
+
+
+**如果是类内部方法直接不是走代理，这个时候可以通过维护一个自身实例的代理。**
+
+```.java
+@Service
+public class PersonServiceImpl implements PersonService {
+    @Autowired
+    PersonRepository personRepository;
+
+    // 注入自身代理对象，在本类内部方法调用事务的传递性才会生效
+    @Autowired
+    PersonService selfProxyPersonService;
+
+    /**
+     * 测试事务的传递性
+     *
+     * @param person
+     * @return
+     */
+    @Transactional
+    public Person save(Person person) {
+        Person p = personRepository.save(person);
+        try {
+            // 新开事务 独立回滚
+            selfProxyPersonService.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            // 使用当前事务 全部回滚
+            selfProxyPersonService.save2(person);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        personRepository.save(person);
+
+        return p;
+    }
+
+    @Transactional
+    public void save2(Person person) {
+        personRepository.save(person);
+        throw new RuntimeException();
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void delete() {
+        personRepository.delete(1L);
+        throw new RuntimeException();
+    }
+}
+```
+
+# 19 JavaEE系列
+
+## 19.1 过滤器和拦截器
+
+参照：https://mp.weixin.qq.com/s?__biz=MzI3NzE0NjcwMg==&mid=2650131098&idx=2&sn=4ca5766e9bca1d22126726b4ecdce52e&chksm=f36bd7bbc41c5eadc1c73f87e38d76f7aa732e588c7f7e59a22c501d178401e60f3796df99c3&mpshare=1&scene=1&srcid=0804slU5LWwSAFxOhvRCKG8P&sharer_sharetime=1596523596112&sharer_shareid=27f3e34a1b5a7cb3fda6f20cad5dd0d4&exportkey=AUL%2FVdy9Sw0XBQeHV1fWPGU%3D&pass_ticket=uIl7QeOQrAzDVRHayhgHNUjscSv3d1HMZh1zWPUDGujXt2lWBESXGPNOqS4HGHFq&wx_header=0#rd
+
+|过滤器 (Filter):
+
+```.java
+过滤器的配置比较简单，直接实现Filter 接口即可，也可以通过@WebFilter注解实现对特定URL拦截，看到Filter 接口中定义了三个方法。
+
+    init() ：该方法在容器启动初始化过滤器时被调用，它在 Filter 的整个生命周期只会被调用一次。「注意」：这个方法必须执行成功，否则过滤器会不起作用。
+    doFilter() ：容器中的每一次请求都会调用该方法， FilterChain 用来调用下一个过滤器 Filter。
+    destroy()：当容器销毁 过滤器实例时调用该方法，一般在方法中销毁或关闭资源，在过滤器 Filter 的整个生命周期也只会被调用一次
+    
+    @Component
+public class MyFilter implements Filter {
+     @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        System.out.println("Filter 前置");
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        System.out.println("Filter 处理中");
+        filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    @Override
+    public void destroy() {
+        System.out.println("Filter 后置");
+    }
+}
+```
+
+|拦截器 (Interceptor)
+
+```.java
+	拦截器它是链式调用，一个应用中可以同时存在多个拦截器Interceptor， 一个请求也可以触发多个拦截器 ，而每个拦截器的调用会依据它的声明顺序依次执行。
+
+	首先编写一个简单的拦截器处理类，请求的拦截是通过HandlerInterceptor 来实现，看到HandlerInterceptor 接口中也定义了三个方法。
+
+    preHandle() ：这个方法将在请求处理之前进行调用。「注意」：如果该方法的返回值为false ，将视为当前请求结束，不仅自身的拦截器会失效，还会导致其他的拦截器也不再执行。
+    
+    postHandle()：只有在 preHandle() 方法返回值为true 时才会执行。会在Controller 中的方法调用之后，DispatcherServlet 返回渲染视图之前被调用。「有意思的是」：postHandle() 方法被调用的顺序跟 
+    
+    preHandle() 是相反的，先声明的拦截器  preHandle() 方法先执行，而postHandle()方法反而会后执行。
+    
+    afterCompletion()：只有在 preHandle() 方法返回值为true 时才会执行。在整个请求结束之后，  DispatcherServlet 渲染了对应的视图之后执行。
+    
+    
+    @Component
+public class MyInterceptor implements HandlerInterceptor {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        System.out.println("Interceptor 前置");
+        return true;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        System.out.println("Interceptor 处理中");
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        System.out.println("Interceptor 后置");
+    }
+}
+```
+
+​		将自定义好的拦截器处理类进行注册，并通过`addPathPatterns`、`excludePathPatterns`等属性设置需要拦截或需要排除的 `URL`
+
+```.java
+@Configuration
+public class MyMvcConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new MyInterceptor1()).addPathPatterns("/**");
+    }
+}
+```
+
+
+
+|不同点:
+
+​	1、实现原理不同
+
+​			`过滤器` 是基于函数回调的，`拦截器` 则是基于Java的反射机制（动态代理）实现的
+
+​	2、使用范围不同
+
+​			过滤器`Filter` 的使用要依赖于`Tomcat`等容器，导致它只能在`web`程序中使用
+
+​	3、触发时机不同
+
+​			过滤器`Filter`是在请求进入容器后，但在进入`servlet`之前进行预处理，请求结束是在`servlet`处理完			以后。
+
+​			拦截器 `Interceptor` 是在请求进入`servlet`后，在进入`Controller`之前进行预处理的，`Controller` 			中渲染了对应的视图之后请求结束。
+
+​	4、拦截的请求范围不同
+
+​			过滤器`Filter`执行了两次，拦截器`Interceptor`只执行了一次。这是因为过滤器几乎可以对所有进入容			器的请求起作用，而拦截器只会对`Controller`中请求或访问`static`目录下的资源请求起作用
+
+​	5、注入Bean情况不同
+
+​			因为加载顺序导致的问题，`拦截器`加载的时间点在`springcontext`之前，而`Bean`又是由`spring`进行管			理。所以springBean无法注入到拦截器
+
+​			解决方案也很简单，我们在注册拦截器之前，先将`Interceptor` 手动进行注入。**「注意」**：在`registry.addInterceptor()`注册的是`getMyInterceptor()` 实例。
+
+```.java
+@Configuration
+public class MyMvcConfig implements WebMvcConfigurer {
+
+    @Bean
+    public MyInterceptor getMyInterceptor(){
+        System.out.println("注入了MyInterceptor");
+        return new MyInterceptor();
+    }
+    
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+
+        registry.addInterceptor(getMyInterceptor()).addPathPatterns("/**");
+    }
+}
+```
+
+
+
+6、控制执行顺序不同
+
+​		实际开发过程中，会出现多个过滤器或拦截器同时存在的情况，不过，有时我们希望某个过滤器或拦截器能优先执行，就涉及到它们的执行顺序。
+
+​		过滤器用`@Order`注解控制执行顺序，通过`@Order`控制过滤器的级别，值越小级别越高越先执行。
+
+```.java
+@Order(Ordered.HIGHEST_PRECEDENCE)
+@Component
+public class MyFilter2 implements Filter {}
+```
+
+拦截器默认的执行顺序，就是它的注册顺序，也可以通过`Order`手动设置控制，值越小越先执行。
+
+```.java
+@Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new MyInterceptor2()).addPathPatterns("/**").order(2);
+        registry.addInterceptor(new MyInterceptor1()).addPathPatterns("/**").order(1);
+        registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**").order(3);
+    }
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
