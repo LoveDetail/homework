@@ -3,7 +3,6 @@ package com.gp.serialization.jackson;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,7 +38,7 @@ public class XmlPerson {
     private int age;
 
     @JsonProperty("IdentityCode")
-    @JacksonXmlCData
+//    @JacksonXmlCData
     private String identityCode;
 
     @JsonProperty("Birthday")

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
@@ -44,17 +43,17 @@ public class MyJacksonTestDemo {
 
     @SneakyThrows
     private static void xmlPersonDemo(){
-        XmlPerson p1 = new XmlPerson("yitian", "易天", 25, "10000", LocalDate.of(1994, 1, 1));
-        XmlMapper mapper = new XmlMapper();
-        mapper.findAndRegisterModules();
-
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-
-        String text = mapper.writeValueAsString(p1);
-        System.out.println(text);
-        XmlPerson p2 = mapper.readValue(text, XmlPerson.class);
-        System.out.println(p2);
+//        XmlPerson p1 = new XmlPerson("yitian", "易天", 25, "10000", LocalDate.of(1994, 1, 1));
+//        XmlMapper mapper = new XmlMapper();
+//        mapper.findAndRegisterModules();
+//
+//        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+//        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+//
+//        String text = mapper.writeValueAsString(p1);
+//        System.out.println(text);
+//        XmlPerson p2 = mapper.readValue(text, XmlPerson.class);
+//        System.out.println(p2);
     }
 
 
