@@ -84,9 +84,4 @@ public class MyTestController {
 
     }
 
-    @Autowired
-    public void ss(){
-        System.out.println("我是增加了@Component注解的并且加了@Autowired的方法!!!!!!!!!!!!!!!!!!!!!");
-    }
-
 }

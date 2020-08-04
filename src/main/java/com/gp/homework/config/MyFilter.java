@@ -1,7 +1,5 @@
 package com.gp.homework.config;
 
-import org.springframework.core.annotation.Order;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
@@ -11,8 +9,7 @@ import java.io.IOException;
  */
 
 //@Component
-@WebFilter(filterName="MyFilter", urlPatterns="/*")
-@Order(1)
+@WebFilter(filterName="myFilter",urlPatterns={"/*"})
 public class MyFilter implements Filter {
 
     /**

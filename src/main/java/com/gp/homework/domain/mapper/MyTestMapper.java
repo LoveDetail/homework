@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface MyTestMapper {
 
-    @Select("select * from Materiel")
+    @Select("select * from Materiel limit 0,10")
     List<Materiel> queryMateriel() ;
 
 
