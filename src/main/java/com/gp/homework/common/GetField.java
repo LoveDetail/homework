@@ -19,7 +19,7 @@ public class GetField {
 		String password = "Wayne)&11" ;
 
 		//获取数据表的字段，用来生成DTO的变量 
-		getDateBaseField(JdbcUrlEnum.MYSQLDRIVER8,username,password,"SELECT * FROM user LIMIT 0") ;
+		getDateBaseField(JdbcUrlEnum.MYSQLDRIVER8,username,password,"SELECT * FROM Person LIMIT 0") ;
 //		getDateBaseField(JdbcUrlEnum.SQLSERVER_MICROSOFT,username,password,"select top 0 * from test") ;
 		
 		//生成insert语句

@@ -1,11 +1,15 @@
 package com.gp.homework.controller;
 
+import com.gp.homework.domain.entity.SimpleLocalPerson;
 import com.gp.homework.domain.entity.TestUsers;
+import com.gp.homework.domain.mapper.MyTestLocalDateTimeMapper;
 import com.gp.homework.domain.mapper.MyTestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * Create by Wayne on 2020/6/2
@@ -18,6 +22,24 @@ public class MyTestOldController {
     @Autowired
     MyTestMapper myTestMapper  ;
 
+    @Autowired
+    MyTestLocalDateTimeMapper myTestLocalDateTimeMapper ;
+
+    @RequestMapping("/person")
+    @ResponseBody
+    public List<SimpleLocalPerson> queryPerson(){
+
+        List<SimpleLocalPerson> list = myTestLocalDateTimeMapper.queryPerson() ;
+        return list ;
+    }
+
+    @RequestMapping("/insertPerson")
+    @ResponseBody
+    public int insertSimplePerson(SimpleLocalPerson person){
+        System.out.println(person);
+        return myTestLocalDateTimeMapper.insertPerson(person) ;
+
+    }
 
     @RequestMapping("/bbb")
     @ResponseBody
