@@ -35,12 +35,11 @@ public class RedisUtil {
     /**
      * 释放分布式锁
      * @param lockKey 锁
-     * @param requestId 请求标识
+     * @param valueUUID value值，每个请求或者现成分配一个UUID，现成之间不可重复
      * @return 是否释放成功
      */
-    public boolean releaseLock(String lockKey, String requestId) {
-        String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end" ;
-        return (Long)redisTemplate.execute(RedisScript.of(script,Long.class), Arrays.asList(lockKey),requestId) >= 1 ? true : false ;
+    public boolean releaseLock(String lockKey, String valueUUID) {
+        return (Long)redisTemplate.execute(RedisScript.of("if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end",Long.class), Arrays.asList(lockKey),valueUUID) >= 1 ? true : false ;
     }
 
     /**
