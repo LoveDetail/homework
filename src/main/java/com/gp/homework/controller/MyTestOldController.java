@@ -1,5 +1,6 @@
 package com.gp.homework.controller;
 
+import com.common.annotation.NoRepeatSubmit;
 import com.gp.homework.domain.entity.SimpleLocalPerson;
 import com.gp.homework.domain.entity.TestUsers;
 import com.gp.homework.domain.mapper.MyTestLocalDateTimeMapper;
@@ -35,6 +36,7 @@ public class MyTestOldController {
 
     @RequestMapping("/insertPerson")
     @ResponseBody
+    @NoRepeatSubmit
     public int insertSimplePerson(SimpleLocalPerson person){
         System.out.println(person);
         return myTestLocalDateTimeMapper.insertPerson(person) ;
@@ -43,6 +45,7 @@ public class MyTestOldController {
 
     @RequestMapping("/bbb")
     @ResponseBody
+    @NoRepeatSubmit
     public void s(){
         System.out.println("111");
     }

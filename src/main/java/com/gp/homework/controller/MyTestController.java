@@ -1,15 +1,25 @@
 package com.gp.homework.controller;
 
+import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
+import com.common.annotation.NoRepeatSubmit;
 import com.gp.homework.callback.ClientRequest;
 import com.gp.homework.common.CommonTimeCache;
 import com.gp.homework.domain.entity.Materiel;
 import com.gp.homework.domain.mapper.MyTestMapper;
 import com.gp.homework.event.myevent.SalesTrnasEventPusher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -26,6 +36,57 @@ public class MyTestController {
     @Autowired
     SalesTrnasEventPusher eventDemoPublish ;
 
+
+    @Autowired
+    RestTemplate restTemplate ;
+
+    private HttpEntity buildRequest(String userId){
+        HttpHeaders headers = new HttpHeaders() ;
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization","yourToken");
+        Map<String,Object> body = new HashMap<>() ;
+        body.put("userId",userId) ;
+        return new HttpEntity(body,headers) ;
+    }
+
+    @NoRepeatSubmit
+    @ResponseBody
+    @GetMapping("/token2")
+    public String tokenTest(){
+        System.out.println("I'm a Aspect !!");
+        return "fine" ;
+    }
+
+    @GetMapping("/token")
+    @NoRepeatSubmit
+    public String token(){
+
+        System.out.println("执行多线程测试");
+        String url = "http://localhost:8080/aaa/bbb" ;
+        CountDownLatch countDownLatch = new CountDownLatch(1) ;
+
+        for(int i=0; i<10; i++){
+            String userId = "wayne"+i ;
+
+            ThreadUtil.execute(()->{
+                try {
+                    countDownLatch.await();
+                    System.out.println("Thread:"+Thread.currentThread().getName()+
+                            ",time:"+System.currentTimeMillis());
+
+                    ResponseEntity<String> response = restTemplate.postForEntity(url,buildRequest(userId),String.class) ;
+
+                    System.out.println("Thread:"+Thread.currentThread().getName()+","+response.getBody());
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        countDownLatch.countDown();
+
+        return "token" ;
+    }
 
 
     @GetMapping("/m")

@@ -1,12 +1,60 @@
+---
+typora-root-url: pic
+---
+
 
 
 # 1、函数式编程 jdk1.8
 
 `常见的函数式编程接口，基于JDK1.8`
 
-![1557970696401](C:\Users\ADMINI~1\AppData\Local\Temp\1557970696401.png)
 
----
+
+| 序号 | 接口                    | 描述                                                         |
+| ---- | ----------------------- | ------------------------------------------------------------ |
+| 1    | BiConsumer<T,U>         | 代表了一个接受两个输入参数的操作，并且不返回任何结果         |
+| 2    | BiFunction<T,U,R>       | 代表了一个接受两个输入参数的方法，并且返回一个结果           |
+| 3    | BinaryOperator<T>       | 代表了一个作用于于两个同类型操作符的操作，并且返回了操作符同类型的结果 |
+| 4    | BiPredicate<T,U>        | 代表了一个两个参数的boolean值方法                            |
+| 5    | BooleanSupplier         | 代表了boolean值结果的提供方                                  |
+| 6    | Consumer<T>             | 代表了接受一个输入参数并且无返回的操作                       |
+| 7    | DoubleBinaryOperator    | 代表了作用于两个double值操作符的操作，并且返回了一个double值的结果。 |
+| 8    | DoubleConsumer          | 代表一个接受double值参数的操作，并且不返回结果。             |
+| 9    | DoubleFunction<R>       | 代表接受一个double值参数的方法，并且返回结果                 |
+| 10   | DoublePredicate         | 代表一个拥有double值参数的boolean值方法                      |
+| 11   | DoubleSupplier          | 代表一个double值结构的提供方                                 |
+| 12   | DoubleToIntFunction     | 接受一个double类型输入，返回一个int类型结果。                |
+| 13   | DoubleToLongFunction    | 接受一个double类型输入，返回一个long类型结果                 |
+| 14   | DoubleUnaryOperator     | 接受一个参数同为类型double,返回值类型也为double 。           |
+| 15   | Function<T,R>           | 接受一个输入参数，返回一个结果。                             |
+| 16   | IntBinaryOperator       | 接受两个参数同为类型int,返回值类型也为int 。                 |
+| 17   | IntConsumer             | 接受一个int类型的输入参数，无返回值 。                       |
+| 18   | IntFunction<R>          | 接受一个int类型输入参数，返回一个结果 。                     |
+| 19   | IntPredicate            | 接受一个int输入参数，返回一个布尔值的结果。                  |
+| 20   | IntSupplier             | 无参数，返回一个int类型结果。                                |
+| 21   | IntToDoubleFunction     | 接受一个int类型输入，返回一个double类型结果 。               |
+| 22   | IntToLongFunction       | 接受一个int类型输入，返回一个long类型结果。                  |
+| 23   | IntUnaryOperator        | 接受一个参数同为类型int,返回值类型也为int 。                 |
+| 24   | LongBinaryOperator      | 接受两个参数同为类型long,返回值类型也为long。                |
+| 25   | LongConsumer            | 接受一个long类型的输入参数，无返回值。                       |
+| 26   | LongFunction<R>         | 接受一个long类型输入参数，返回一个结果。                     |
+| 27   | LongPredicate           | R接受一个long输入参数，返回一个布尔值类型结果。              |
+| 28   | LongSupplier            | 无参数，返回一个结果long类型的值。                           |
+| 29   | LongToDoubleFunction    | 接受一个long类型输入，返回一个double类型结果。               |
+| 30   | LongToIntFunction       | 接受一个long类型输入，返回一个int类型结果。                  |
+| 31   | LongUnaryOperator       | 接受一个参数同为类型long,返回值类型也为long。                |
+| 32   | ObjDoubleConsumer<T>    | 接受一个object类型和一个double类型的输入参数，无返回值。     |
+| 33   | ObjIntConsumer<T>       | 接受一个object类型和一个int类型的输入参数，无返回值。        |
+| 34   | ObjLongConsumer<T>      | 接受一个object类型和一个long类型的输入参数，无返回值。       |
+| 35   | Predicate<T>            | 接受一个输入参数，返回一个布尔值结果。                       |
+| 36   | Supplier<T>             | 无参数，返回一个结果。                                       |
+| 37   | ToDoubleBiFunction<T,U> | 接受两个输入参数，返回一个double类型结果                     |
+| 38   | ToDoubleFunction<T>     | 接受一个输入参数，返回一个double类型结果                     |
+| 39   | ToIntBiFunction<T,U>    | 接受两个输入参数，返回一个int类型结果。                      |
+| 40   | ToIntFunction<T>        | 接受一个输入参数，返回一个int类型结果。                      |
+| 41   | ToLongBiFunction<T,U>   | 接受两个输入参数，返回一个long类型结果。                     |
+| 42   | ToLongFunction<T>       | 接受一个输入参数，返回一个long类型结果。                     |
+| 43   | UnaryOperator<T>        | 接受一个参数为类型T,返回值类型也为T。                        |
 
 
 
@@ -483,21 +531,125 @@ kill -9 xxxx
 
 
 
-# 7 各项目杂记
+# 7 操作系统知识
 
-## 7.1 江西吉安
+## 7.1 同步、异步、阻塞、非阻塞
 
-1 外网访问方式:
+### **7.1.1 IO操作:**
 
-[http://ycyw.jassw.cn/ioms/index.jsp](qq://txfile/#)
+```.java
+IO分两阶段（一旦拿到数据后就变成了数据操作，不再是IO）：
+    1.数据准备阶段
+    2.内核空间复制数据到用户进程缓冲区（用户空间）阶段
 
-[http://182.101.207.166:8062/ioms](qq://txfile/#) 
+在操作系统中，程序运行的空间分为内核空间和用户空间。
+    应用程序都是运行在用户空间的，所以它们能操作的数据也都在用户空间。
 
-2 VPN
 
-182.101.207.166:50025 
+阻塞IO和非阻塞IO的区别在于第一步发起IO请求是否会被阻塞：
+    如果阻塞直到完成那么就是传统的阻塞IO，如果不阻塞，那么就是非阻塞IO。
 
-sqk8318393! 
+一般来讲：
+    阻塞IO模型、非阻塞IO模型、IO复用模型(select/poll/epoll)、信号驱动IO模型都属于同步IO，因为阶段2是阻塞的(尽管时间很短)。
+
+同步IO和异步IO的区别就在于第二个步骤是否阻塞：
+    如果不阻塞，而是操作系统帮你做完IO操作再将结果返回给你，那么就是异步IO
+    
+```
+
+![7.1.1_IO图](/../杂记_wayne/7.1.1_IO图.png)
+
+### 7.1.2 同步和异步IO 阻塞和非阻塞IO
+
+```.java
+同步和异步IO的概念：
+	同步是用户线程发起I/O请求后需要等待或者轮询内核I/O操作完成后才能继续执行;
+	异步是用户线程发起I/O请求后仍继续执行，当内核I/O操作完成后通知用户线程，或调用用户线程注册的回调函数;
+
+阻塞和非阻塞IO的概念：
+	阻塞是指I/O操作需要彻底完成后才能返回用户空间;
+	非阻塞是指I/O操作被调用后立即返回一个状态值，无需等I/O操作彻底完成;
+```
+
+![7.1.2_异步IO模型](/../杂记_wayne/7.1.2_异步IO模型.png)
+
+
+
+![7.1.2_阻塞式IO模型](/7.1.2_阻塞式IO模型.png)
+
+![7.1.2_非阻塞式IO模型](/../杂记_wayne/7.1.2_非阻塞式IO模型.png)
+
+### 7.1.3 同步与异步（线程间调用）
+
+```.java
+同步与异步是对应于调用者与被调用者，它们是线程之间的关系，两个线程之间要么是同步的，要么是异步的
+
+	同步操作时，调用者需要等待被调用者返回结果，才会进行下一步操作 ;
+	而异步则相反，调用者不需要等待被调用者返回调用，即可进行下一步操作，被调用者通常依靠事件、回调等机制来通知调用者结果 ;
+
+```
+
+### 7.1.4 阻塞与非阻塞（线程内调用）
+
+```.java
+阻塞与非阻塞是对同一个线程来说的，在某个时刻，线程要么处于阻塞，要么处于非阻塞
+
+	阻塞和非阻塞关注的是程序在等待调用结果（消息，返回值）时的状态;
+    阻塞调用是指调用结果返回之前，当前线程会被挂起。调用线程只有在得到结果之后才会返回;
+    非阻塞调用指在不能立刻得到结果之前，该调用不会阻塞当前线程;
+```
+
+
+
+### 7.1.5 同步与异步调用/线程/通信
+
+```.java
+同步就是两种东西通过一种机制实现步调一致，异步是两种东西不必步调一致
+
+一、同步调用与异步调用：
+    在用在调用场景中，无非是对调用结果的不同处理。
+    同步调用就是调用一但返回，就能知道结果，而异步是返回时不一定知道结果，还得通过其他机制来获知结果，如：
+        a. 状态 b. 通知 c. 回调函数
+
+二、同步线程与异步线程：
+    同步线程：即两个线程步调要一致，其中一个线程可能要阻塞等待另外一个线程的运行，要相互协商。快的阻塞一下等到慢的步调一致。
+    异步线程：步调不用一致，各自按各自的步调运行，不受另一个线程的影响。
+
+三、同步通信与异步通信：
+    同步和异步是指：发送方和接收方是否协调步调一致
+    同步通信是指：发送方和接收方通过一定机制，实现收发步调协调。
+        如：发送方发出数据后，等接收方发回响应以后才发下一个数据包的通讯方式
+    异步通信是指：发送方的发送不管接收方的接收状态。
+        如：发送方发出数据后，不等接收方发回响应，接着发送下个数据包的通讯方式。
+
+阻塞可以是实现同步的一种手段！例如两个东西需要同步，一旦出现不同步情况，我就阻塞快的一方，使双方达到同步。
+同步是两个对象之间的关系，而阻塞是一个对象的状态。
+```
+
+
+
+### 17.1.6 四种组合方式
+
+```.java
+同步阻塞方式(阿呆等水开)：
+    发送方发送请求之后一直等待响应。
+    接收方处理请求时进行的IO操作如果不能马上等到返回结果，就一直等到返回结果后，才响应发送方，期间不能进行其他工作。
+
+同步非阻塞方式（阿呆时不时看水是否烧开）：
+	发送方发送请求之后，一直等待响应。
+	接受方处理请求时进行的IO操作如果不能马上的得到结果，就立即返回，取做其他事情。
+	但是由于没有得到请求处理结果，不响应发送方，发送方一直等待。
+	当IO操作完成以后，将完成状态和结果通知接收方，接收方再响应发送方，发送方才进入下一次请求过程。（实际不应用）
+
+异步阻塞方式（阿呆等着水壶响）：
+	发送方向接收方请求后，不等待响应，可以继续其他工作。
+	接收方处理请求时进行IO操作如果不能马上得到结果，就一直等到返回结果后，才响应发送方，期间不能进行其他操作。 （实际不应用）
+
+异步非阻塞方式(阿呆等待水壶响)：
+	发送方向接收方请求后，不等待响应，可以继续其他工作。
+	接收方处理请求时进行IO操作如果不能马上得到结果，也不等待，而是马上返回去做其他事情。
+	当IO操作完成以后，将完成状态和结果通知接收方，接收方再响应发送方。（效率最高）
+```
 
 
 
@@ -1318,7 +1470,21 @@ mysql>flush privileges;
 用户创建  useradd -g elitel -G root yiWangC
 
 创建/修改密码  passwd yiWangC
+从root组中删除night2lx用户  gpasswd root -d night2lx
 ```
+
+|wheel组的作用:
+
+只有wheel组的用户才可以使用su root 命令，启用root用户执行权限，其他用户组输入密码后提示密码无效，具体配置如下：
+
+```.shell
+1）修改 /etc/pam.d/su 文件:
+	找到“#auth required /lib/security/$ISA/pam_wheel.so use_uid ”这一行，将行首的“#”去掉。
+	
+2）修改 /etc/login.defs 文件，在最后一行增加“SU_WHEEL_ONLY yes”语句。
+```
+
+
 
 
 
@@ -1370,7 +1536,7 @@ systemctl start rclient.service (需配置rclient.service文件)
     device-mapper-persistent-data \
     lvm2
     
-03 设置docker仓库  [设置阿里云镜像仓库可以先自行百度，后面课程也会有自己的docker hub讲解]	
+03 设置docker仓库  [设置阿里云镜像仓库可以先自行百度，学会建立自己的docker hub]	
 	sudo yum-config-manager \
       --add-repo \
       https://download.docker.com/linux/centos/docker-ce.repo
@@ -1701,6 +1867,23 @@ public class PersonServiceImpl implements PersonService {
 }
 ```
 
+### 18.1.6 Spring事务失效的原因
+
+```.java
+1、数据库或者存储引擎不支持事务(mysql的myisam)
+2、调用方法为非public方法，只有public的方法才可以进行事务管理
+√3、内部调用，同一个类方法A调用方法B，因为是内部调用所以不起作用[可以通过注入自己来实现，但是很不优雅]
+4、Transactional注解参数的传播级别是@Transactional(propagation = Propagation.NOT_SUPPORTED)
+5、数据源没有启用事务管理
+6、所在类没有被加载成Bean,比如，没有@Service注解
+√7、抛出的异常被吃了
+√8、抛出的异常为错误的异常类型，比如需要捕获RunTimeExcption,结果抛出了Exception
+```
+
+
+
+
+
 # 19 JavaEE系列
 
 ## 19.1 过滤器和拦截器
@@ -1859,35 +2042,583 @@ public class MyFilter2 implements Filter {}
 
 
 
+## 19.2 Nginx的配置和使用
+
+参考：https://mp.weixin.qq.com/s?__biz=MzAxMTkwODIyNA==&mid=2247492572&amp;idx=1&amp;sn=6cf48b841c92c3e24cf4216db52e3fd2&source=41#wechat_redirect
+
+### 19.2.1  常用命令:
+
+```.shell
+nginx -s stop       快速关闭Nginx，可能不保存相关信息，并迅速终止web服务。
+nginx -s quit       平稳关闭Nginx，保存相关信息，有安排的结束web服务。
+nginx -s reload     因改变了Nginx相关配置，需要重新加载配置而重载。
+nginx -s reopen     重新打开日志文件。
+nginx -c filename   为 Nginx 指定一个配置文件，来代替缺省的。
+nginx -t            不运行，而仅仅测试配置文件。nginx 将检查配置文件的语法的正确性，并尝试打开配置文件中所引用到的文件。
+nginx -v            显示 nginx 的版本。
+nginx -V            显示 nginx 的版本，编译器版本和配置参数。
+```
+
+|如果不想每次都敲命令，可以在 nginx 安装目录下新添一个启动批处理文件startup.bat，双击即可运行。内容如下：
+
+```.shell
+@echo off
+rem 如果启动前已经启动nginx并记录下pid文件，会kill指定进程
+nginx.exe -s stop
+
+rem 测试配置文件语法正确性
+nginx.exe -t -c conf/nginx.conf
+
+rem 显示版本信息
+nginx.exe -v
+
+rem 按照指定配置去启动nginx
+nginx.exe -c conf/nginx.conf
+```
+
+
+
+### 19.2.2 location 路径匹配
+
+**| location 路径正则匹配：**  
+
+| 说明 | 符号                                                         |
+| ---- | ------------------------------------------------------------ |
+| `~`  | 正则匹配，区分大小写                                         |
+| `~*` | 正则匹配，不区分大小写                                       |
+| `^~` | 普通字符匹配，如果该选项匹配，则，只匹配改选项，不再向下匹配其他选项 |
+| `=`  | 普通字符匹配，精确匹配                                       |
+| `@`  | 定义一个命名的 location，用于内部定向，例如 error_page，try_files |
+
+
+
+**|匹配优先级(跟 location 的书写顺序关系不大)：**
+
+1. **精确匹配**：
+
+   `=`前缀的指令严格匹配这个查询。
+
+   如果找到，停止搜索。
+
+2. **普通字符匹配**：
+
+   所有剩下的常规字符串，最长的匹配。
+
+   如果这个匹配使用`^〜`前缀，搜索停止。
+
+3. **正则匹配**：
+
+   正则表达式，在配置文件中定义的顺序，匹配到一个结果，搜索停止；
+
+4. **默认匹配**：
+
+   如果第3条规则产生匹配的话，结果被使用。
+
+   否则，如同从第2条规则被使用。
+
+通过一个实例，简单说明一下匹配优先级：
+
+```.java
+location  = / {
+  # 精确匹配 / ，主机名后面不能带任何字符串
+  [ configuration A ]
+}
+
+location  / {
+  # 因为所有的地址都以 / 开头，所以这条规则将匹配到所有请求
+  # 但是正则和最长字符串会优先匹配
+  [ configuration B ]
+}
+
+location /documents/ {
+  # 匹配任何以 /documents/ 开头的地址，匹配符合以后，还要继续往下搜索
+  # 只有后面的正则表达式没有匹配到时，这一条才会采用这一条
+  [ configuration C ]
+}
+
+location ~ /documents/Abc {
+  # 匹配任何以 /documents/ 开头的地址，匹配符合以后，还要继续往下搜索
+  # 只有后面的正则表达式没有匹配到时，这一条才会采用这一条
+  [ configuration CC ]
+}
+
+location ^~ /images/ {
+  # 匹配任何以 /images/ 开头的地址，匹配符合以后，停止往下搜索正则，采用这一条。
+  [ configuration D ]
+}
+
+location ~* \.(gif|jpg|jpeg)$ {
+  # 匹配所有以 gif,jpg或jpeg 结尾的请求
+  # 然而，所有请求 /images/ 下的图片会被 config D 处理，因为 ^~ 到达不了这一条正则
+  [ configuration E ]
+}
+
+location /images/ {
+  # 字符匹配到 /images/，继续往下，会发现 ^~ 存在
+  [ configuration F ]
+}
+
+location /images/abc {
+  # 最长字符匹配到 /images/abc，继续往下，会发现 ^~ 存在
+  # F与G的放置顺序是没有关系的
+  [ configuration G ]
+}
+
+location ~ /images/abc/ {
+  # 只有去掉 config D 才有效：先最长匹配 config G 开头的地址，继续往下搜索，匹配到这一条正则，采用
+    [ configuration H ]
+}
+```
+
+按照上面的location写法，以下的匹配示例成立：
+
+```.java
+    / -> config A：
+
+    精确完全匹配，即使/index.html也匹配不了
+
+    /downloads/download.html -> config B：
+
+    匹配B以后，往下没有任何匹配，采用B
+
+    /images/1.gif -> configuration D：
+
+    匹配到F，往下匹配到D，停止往下
+
+    /images/abc/def -> config D：
+
+    最长匹配到G，往下匹配D，停止往下你可以看到 任何以/images/开头的都会匹配到D并停止，FG写在这里是没有任何意义的，H是永远轮不到的，这里只是为了说明匹配顺序
+
+    /documents/document.html -> config C：
+
+    匹配到C，往下没有任何匹配，采用C
+
+    /documents/1.jpg -> configuration E：
+
+    匹配到C，往下正则匹配到E
+
+    /documents/Abc.jpg -> config CC：
+
+    最长匹配到C，往下正则顺序匹配到CC，不会往下到E
+```
 
 
 
 
 
+### 19.2.3 Nginx实战配置
+
+`注：conf / nginx.conf 是 nginx 的默认配置文件。你也可以使用 nginx -c 指定你的配置文件`
+
+`webapp，注意启动绑定的端口要和 nginx 中的 upstream 设置的端口保持一致`
+
+**实战一：反向代理**
+
+```.shell
+#运行用户
+#user somebody;
+
+#启动进程,通常设置成和cpu的数量相等
+worker_processes  1;
+
+#全局错误日志
+error_log  D:/Tools/nginx-1.10.1/logs/error.log;
+error_log  D:/Tools/nginx-1.10.1/logs/notice.log  notice;
+error_log  D:/Tools/nginx-1.10.1/logs/info.log  info;
+
+#PID文件，记录当前启动的nginx的进程ID
+pid        D:/Tools/nginx-1.10.1/logs/nginx.pid;
+
+#工作模式及连接数上限
+events {
+    worker_connections 1024;    #单个后台worker process进程的最大并发链接数
+}
+
+#设定http服务器，利用它的反向代理功能提供负载均衡支持
+http {
+    #设定mime类型(邮件支持类型),类型由mime.types文件定义
+    include       D:/Tools/nginx-1.10.1/conf/mime.types;
+    default_type  application/octet-stream;
+
+    #设定日志
+    log_format  main  '[$remote_addr] - [$remote_user] [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log    D:/Tools/nginx-1.10.1/logs/access.log main;
+    rewrite_log     on;
+
+    #sendfile 指令指定 nginx 是否调用 sendfile 函数（zero copy 方式）来输出文件，对于普通应用，
+    #必须设为 on,如果用来进行下载等应用磁盘IO重负载应用，可设置为 off，以平衡磁盘与网络I/O处理速度，降低系统的uptime.
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #连接超时时间
+    keepalive_timeout  120;
+    tcp_nodelay        on;
+
+    #gzip压缩开关
+    #gzip  on;
+
+    #设定实际的服务器列表
+    upstream zp_server1{
+        server 127.0.0.1:8089;
+    }
+
+    #HTTP服务器
+    server {
+        #监听80端口，80端口是知名端口号，用于HTTP协议
+        listen       80;
+
+        #定义使用www.xx.com访问
+        server_name  www.helloworld.com;
+
+        #首页
+        index index.html
+
+        #指向webapp的目录
+        root D:\01_Workspace\Project\github\zp\SpringNotes\spring-security\spring-shiro\src\main\webapp;
+
+        #编码格式
+        charset utf-8;
+
+        #代理配置参数
+        proxy_connect_timeout 180;
+        proxy_send_timeout 180;
+        proxy_read_timeout 180;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarder-For $remote_addr;
+
+        #反向代理的路径（和upstream绑定），location 后面设置映射的路径
+        location / {
+            proxy_pass http://zp_server1;
+        }
+
+        #静态文件，nginx自己处理
+        location ~ ^/(images|javascript|js|css|flash|media|static)/ {
+            root D:\01_Workspace\Project\github\zp\SpringNotes\spring-security\spring-shiro\src\main\webapp\views;
+            #过期30天，静态文件不怎么更新，过期可以设大一点，如果频繁更新，则可以设置得小一点。
+            expires 30d;
+        }
+
+        #设定查看Nginx状态的地址
+        location /NginxStatus {
+            stub_status           on;
+            access_log            on;
+            auth_basic            "NginxStatus";
+            auth_basic_user_file  conf/htpasswd;
+        }
+
+        #禁止访问 .htxxx 文件
+        location ~ /\.ht {
+            deny all;
+        }
+
+        #错误处理页面（可选择性配置）
+        #error_page   404              /404.html;
+        #error_page   500 502 503 504  /50x.html;
+        #location = /50x.html {
+        #    root   html;
+        #}
+    }
+}
+```
 
 
 
+**实战二：负载均衡**
+
+```.java
+http {
+     #设定mime类型,类型由mime.type文件定义
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+    #设定日志格式
+    access_log    /var/log/nginx/access.log;
+
+    #设定负载均衡的服务器列表
+    upstream load_balance_server {
+        #weigth参数表示权值，权值越高被分配到的几率越大
+        server 192.168.1.11:80   weight=5;
+        server 192.168.1.12:80   weight=1;
+        server 192.168.1.13:80   weight=6;
+    }
+
+   #HTTP服务器
+   server {
+        #侦听80端口
+        listen       80;
+
+        #定义使用www.xx.com访问
+        server_name  www.helloworld.com;
+
+        #对所有请求进行负载均衡请求
+        location / {
+            root        /root;                 #定义服务器的默认网站根目录位置
+            index       index.html index.htm;  #定义首页索引文件的名称
+            proxy_pass  http://load_balance_server ;#请求转向load_balance_server 定义的服务器列表
+
+            #以下是一些反向代理的配置(可选择性配置)
+            #proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            #后端的Web服务器可以通过X-Forwarded-For获取用户真实IP
+            proxy_set_header X-Forwarded-For $remote_addr;
+            proxy_connect_timeout 90;          #nginx跟后端服务器连接超时时间(代理连接超时)
+            proxy_send_timeout 90;             #后端服务器数据回传时间(代理发送超时)
+            proxy_read_timeout 90;             #连接成功后，后端服务器响应时间(代理接收超时)
+            proxy_buffer_size 4k;              #设置代理服务器（nginx）保存用户头信息的缓冲区大小
+            proxy_buffers 4 32k;               #proxy_buffers缓冲区，网页平均在32k以下的话，这样设置
+            proxy_busy_buffers_size 64k;       #高负荷下缓冲大小（proxy_buffers*2）
+            proxy_temp_file_write_size 64k;    #设定缓存文件夹大小，大于这个值，将从upstream服务器传
+
+            client_max_body_size 10m;          #允许客户端请求的最大单文件字节数
+            client_body_buffer_size 128k;      #缓冲区代理缓冲用户端请求的最大字节数
+        }
+    }
+}
+```
 
 
 
+**实战三  网站有多个 webapp 的配置**
+
+```.java
+http {
+    #此处省略一些基本配置
+
+    upstream product_server{
+        server www.helloworld.com:8081;
+    }
+
+    upstream admin_server{
+        server www.helloworld.com:8082;
+    }
+
+    upstream finance_server{
+        server www.helloworld.com:8083;
+    }
+
+    server {
+        #此处省略一些基本配置
+        #默认指向product的server
+        location / {
+            proxy_pass http://product_server;
+        }
+
+        location /product/{
+            proxy_pass http://product_server;
+        }
+
+        location /admin/ {
+            proxy_pass http://admin_server;
+        }
+
+        location /finance/ {
+            proxy_pass http://finance_server;
+        }
+    }
+}
+```
 
 
 
+**实战四：https 反向代理配置**
+
+使用 nginx 配置 https 需要知道几点：
+
+- HTTPS 的固定端口号是 443，不同于 HTTP 的 80 端口
+- SSL 标准需要引入安全证书，所以在 nginx.conf 中你需要指定证书和它对应的 key
+
+其他和 http 反向代理基本一样，只是在 Server 部分配置有些不同
+
+```.java
+#HTTP服务器
+  server {
+      #监听443端口。443为知名端口号，主要用于HTTPS协议
+      listen       443 ssl;
+
+      #定义使用www.xx.com访问
+      server_name  www.helloworld.com;
+
+      #ssl证书文件位置(常见证书文件格式为：crt/pem)
+      ssl_certificate      cert.pem;
+      #ssl证书key位置
+      ssl_certificate_key  cert.key;
+
+      #ssl配置参数（选择性配置）
+      ssl_session_cache    shared:SSL:1m;
+      ssl_session_timeout  5m;
+      #数字签名，此处使用MD5
+      ssl_ciphers  HIGH:!aNULL:!MD5;
+      ssl_prefer_server_ciphers  on;
+
+      location / {
+          root   /root;
+          index  index.html index.htm;
+      }
+  }
+```
 
 
 
+**实战五：静态站点配置**
+
+有时候，我们需要配置静态站点(即 html 文件和一堆静态资源)。
+
+举例来说：如果所有的静态资源都放在了 /app/dist 目录下，我们只需要在 nginx.conf 中指定首页以及这个站点的 host 即可。
+
+配置如下：
+
+```.java
+worker_processes  1;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    sendfile        on;
+    keepalive_timeout  65;
+
+    gzip on;
+    gzip_types text/plain application/x-javascript text/css application/xml text/javascript application/javascript image/jpeg image/gif image/png;
+    gzip_vary on;
+
+    server {
+        listen       80;
+        server_name  static.zp.cn;
+
+        location / {
+            root /app/dist;
+            index index.html;
+            #转发任何请求到 index.html
+        }
+    }
+}
+```
+
+然后，添加 HOST：127.0.0.1 static.zp.cn
+
+此时，在本地浏览器访问 static.zp.cn ，就可以访问静态站点了。
 
 
 
+**实战六：搭建文件服务器:**
+
+有时候，团队需要归档一些数据或资料，那么文件服务器必不可少。使用 Nginx 可以非常快速便捷的搭建一个简易的文件服务。
+
+Nginx 中的配置要点：
+
+- 将 autoindex 开启可以显示目录，默认不开启。
+- 将 autoindex_exact_size 开启可以显示文件的大小。
+- 将 autoindex_localtime 开启可以显示文件的修改时间。
+- root 用来设置开放为文件服务的根路径。
+- charset 设置为 charset utf-8,gbk;，可以避免中文乱码问题（windows 服务器下设置后，依然乱码，本人暂时没有找到解决方法）。
+
+一个最简化的配置如下：
+
+```.java
+autoindex on;# 显示目录
+autoindex_exact_size on;# 显示文件大小
+autoindex_localtime on;# 显示文件时间
+
+server {
+    charset      utf-8,gbk; # windows 服务器下设置后，依然乱码，暂时无解
+    listen       9050 default_server;
+    listen       [::]:9050 default_server;
+    server_name  _;
+    root         /share/fs;
+}
+```
 
 
 
+**实战七：跨域解决方案**
 
+各自独立的 web app 在互相访问时，势必存在跨域问题。解决跨域问题一般有两种思路：
 
+**1、CORS**
 
+在后端服务器设置 HTTP 响应头，把你需要运行访问的域名加入加入 Access-Control-Allow-Origin中。
 
+**2、jsonp**
 
+把后端根据请求，构造 json 数据，并返回，前端用 jsonp 跨域。
 
+这两种思路，本文不展开讨论。
+
+需要说明的是，nginx 根据第一种思路，也提供了一种解决跨域的解决方案。
+
+举例：www.helloworld.com 网站是由一个前端 app ，一个后端 app 组成的。前端端口号为 9000， 后端端口号为 8080。
+
+前端和后端如果使用 http 进行交互时，请求会被拒绝，因为存在跨域问题。来看看，nginx 是怎么解决的吧：
+
+首先，在 enable-cors.conf 文件中设置 cors ：
+
+```.java
+# allow origin list
+set $ACAO '*';
+
+# set single origin
+if ($http_origin ~* (www.helloworld.com)$) {
+  set $ACAO $http_origin;
+}
+
+if ($cors = "trueget") {
+    add_header 'Access-Control-Allow-Origin' "$http_origin";
+    add_header 'Access-Control-Allow-Credentials' 'true';
+    add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+    add_header 'Access-Control-Allow-Headers' 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+}
+
+if ($request_method = 'OPTIONS') {
+  set $cors "${cors}options";
+}
+
+if ($request_method = 'GET') {
+  set $cors "${cors}get";
+}
+
+if ($request_method = 'POST') {
+  set $cors "${cors}post";
+}
+```
+
+接下来，在你的服务器中 include enable-cors.conf 来引入跨域配置：
+
+```.java
+# ----------------------------------------------------
+# 此文件为项目 nginx 配置片段
+# 可以直接在 nginx config 中 include（推荐）
+# 或者 copy 到现有 nginx 中，自行配置
+# www.helloworld.com 域名需配合 dns hosts 进行配置
+# 其中，api 开启了 cors，需配合本目录下另一份配置文件
+# ----------------------------------------------------
+upstream front_server{
+  server www.helloworld.com:9000;
+}
+upstream api_server{
+  server www.helloworld.com:8080;
+}
+
+server {
+  listen       80;
+  server_name  www.helloworld.com;
+
+  location ~ ^/api/ {
+    include enable-cors.conf;
+    proxy_pass http://api_server;
+    rewrite "^/api/(.*)$" /$1 break;
+  }
+
+  location ~ ^/ {
+    proxy_pass http://front_server;
+  }
+}
+```
 
 
 

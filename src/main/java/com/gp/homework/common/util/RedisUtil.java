@@ -1,19 +1,47 @@
 package com.gp.homework.common.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.script.RedisScript;
+import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Create by Wayne on 2020/1/14
  */
-//@Service
+@Service
+@Slf4j
 public class RedisUtil {
 
     @Autowired
     private RedisTemplate<String,Object> redisTemplate ;
+
+
+    /**
+     * 尝试获取分布式锁
+     * @param lockKey 锁
+     * @param uuid 请求标识
+     * @param expireMillis 超期时间
+     * @return 是否获取成功
+     */
+    public boolean tryLock(String lockKey, String uuid, int expireMillis) {
+        return redisTemplate.opsForValue().setIfAbsent(lockKey,uuid,Duration.ofMillis(expireMillis));
+    }
+
+    /**
+     * 释放分布式锁
+     * @param lockKey 锁
+     * @param requestId 请求标识
+     * @return 是否释放成功
+     */
+    public boolean releaseLock(String lockKey, String requestId) {
+        String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end" ;
+        return (Long)redisTemplate.execute(RedisScript.of(script,Long.class), Arrays.asList(lockKey),requestId) >= 1 ? true : false ;
+    }
 
     /**
      *
