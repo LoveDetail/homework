@@ -1,6 +1,5 @@
 package com.gp.homework.config;
 
-import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
 import com.common.annotation.NoRepeatSubmit;
 import com.gp.homework.common.util.RedisUtil;
@@ -35,31 +34,32 @@ public class RepeatSubmitAspect {
 
 
 //    @Around("pointCut(noRepeatSubmit)")
-    @Around(value = "@annotation(noRepeatSubmit)") //around 与 下面参数名around对应
+    @Around(value = "@annotation(noRepeatSubmit)")
     public Object around(ProceedingJoinPoint pjp,NoRepeatSubmit noRepeatSubmit) throws Throwable{
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest() ;
         Assert.notNull(request,"request can not null !!!");
 
+        String flag = request.getHeader("Authorization") ;
+
         String key = StrUtil.format("{}{}",request.getSession().getId(),request.getServletPath()) ;
-        String uuid = UUID.randomUUID().toString() ;
+        String requestId = UUID.randomUUID().toString() ;
 
-        if(redisUtil.tryLock(key,uuid,noRepeatSubmit.timeInSecond() * 100000000)){
-            ThreadUtil.execute(()->log.info("tryLock success,key=[{}],valueUUID = [{}]",key,uuid));
-
+        if(redisUtil.tryLock(key,requestId,noRepeatSubmit.timeInSecond() * 100000)){
+            log.info("tryLock success,key=[{}],valueUUID = [{}]",key,requestId) ;
             Object result ;
             try{
                result = pjp.proceed() ;
             }
             finally {
-                redisUtil.releaseLock(key,uuid) ;
-                ThreadUtil.execute(()->log.info("releaseLock success,key=[{}],valueUUID = [{}]",key,uuid));
+                log.info("releaseLock {},key=[{}],valueUUID = [{}]",redisUtil.releaseLock(key,requestId) == true ? "success" : "faild",key,requestId);
             }
             return result ;
         }
-
-        log.info("tryLock fail,key = [{}]",key);
-        return "加锁请求重复，稍后在试！！！" ;
+        else {
+            log.info("tryLock fail,key = [{}]",key);
+            return "加锁请求重复，稍后在试！！！" ;
+        }
     }
 
 }

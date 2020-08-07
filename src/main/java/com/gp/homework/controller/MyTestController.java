@@ -2,12 +2,15 @@ package com.gp.homework.controller;
 
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
+import com.common.annotation.DistributionLockLisenor;
 import com.common.annotation.NoRepeatSubmit;
 import com.gp.homework.callback.ClientRequest;
 import com.gp.homework.common.CommonTimeCache;
+import com.gp.homework.common.util.RedisUtil;
 import com.gp.homework.domain.entity.Materiel;
 import com.gp.homework.domain.mapper.MyTestMapper;
 import com.gp.homework.event.myevent.SalesTrnasEventPusher;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -40,6 +43,9 @@ public class MyTestController {
     @Autowired
     RestTemplate restTemplate ;
 
+    @Autowired
+    RedisUtil redisUtil ;
+
     private HttpEntity buildRequest(String userId){
         HttpHeaders headers = new HttpHeaders() ;
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -49,6 +55,22 @@ public class MyTestController {
         return new HttpEntity(body,headers) ;
     }
 
+    @SneakyThrows
+    @ResponseBody
+    @GetMapping("/tokenKey")
+    @DistributionLockLisenor(functionName="myLockSalesOrder")
+    public String distrbuiltKey(){
+        return "" ;
+    }
+
+
+
+
+
+    /**
+     * 分布式锁，测试重复提交问题
+     * @return
+     */
     @NoRepeatSubmit
     @ResponseBody
     @GetMapping("/token2")
@@ -57,12 +79,16 @@ public class MyTestController {
         return "fine" ;
     }
 
+
+    /**
+     * 分布式锁，测试重复提交问题
+     * @return
+     */
     @GetMapping("/token")
-    @NoRepeatSubmit
     public String token(){
 
         System.out.println("执行多线程测试");
-        String url = "http://localhost:8080/aaa/bbb" ;
+        String url = "http://localhost:8080/test/tokenKey" ;
         CountDownLatch countDownLatch = new CountDownLatch(1) ;
 
         for(int i=0; i<10; i++){
@@ -74,7 +100,9 @@ public class MyTestController {
                     System.out.println("Thread:"+Thread.currentThread().getName()+
                             ",time:"+System.currentTimeMillis());
 
-                    ResponseEntity<String> response = restTemplate.postForEntity(url,buildRequest(userId),String.class) ;
+//                    ResponseEntity<String> response = restTemplate.postForEntity(url,buildRequest(userId),String.class) ;
+
+                    ResponseEntity<String> response = restTemplate.getForEntity(url,String.class) ;
 
                     System.out.println("Thread:"+Thread.currentThread().getName()+","+response.getBody());
 

@@ -12,12 +12,12 @@ import java.io.IOException;
 public class MyFilter2 implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        System.out.println("Filter 前置====2");
+//        System.out.println("Filter 前置====2");
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("Filter 处理====2");
+//        System.out.println("Filter 处理====2");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
