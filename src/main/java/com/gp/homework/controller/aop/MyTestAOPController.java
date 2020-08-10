@@ -61,7 +61,7 @@ public class MyTestAOPController {
     public String token(){
 
         System.out.println("执行多线程测试");
-        String url = "http://localhost:8080/test/tokenKey" ;
+        String url = "http://localhost:8080/aopController/tokenKey" ;
         CountDownLatch countDownLatch = new CountDownLatch(1) ;
 
         for(int i=0; i<10; i++){
