@@ -2,7 +2,7 @@ package com.gp.homework.controller;
 
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
-import com.common.annotation.DistributionLockLisenor;
+import com.common.annotation.DistributionLockListenor;
 import com.common.annotation.NoRepeatSubmit;
 import com.gp.homework.callback.ClientRequest;
 import com.gp.homework.common.CommonTimeCache;
@@ -58,7 +58,7 @@ public class MyTestController {
     @SneakyThrows
     @ResponseBody
     @GetMapping("/tokenKey")
-    @DistributionLockLisenor(functionName="myLockSalesOrder")
+    @DistributionLockListenor(functionName="myLockSalesOrder")
     public String distrbuiltKey(){
         return "" ;
     }
@@ -97,14 +97,14 @@ public class MyTestController {
             ThreadUtil.execute(()->{
                 try {
                     countDownLatch.await();
-                    System.out.println("Thread:"+Thread.currentThread().getName()+
-                            ",time:"+System.currentTimeMillis());
+//                    System.out.println("Thread:"+Thread.currentThread().getName()+
+//                            ",time:"+System.currentTimeMillis());
 
 //                    ResponseEntity<String> response = restTemplate.postForEntity(url,buildRequest(userId),String.class) ;
 
                     ResponseEntity<String> response = restTemplate.getForEntity(url,String.class) ;
 
-                    System.out.println("Thread:"+Thread.currentThread().getName()+","+response.getBody());
+//                    System.out.println("Thread:"+Thread.currentThread().getName()+","+response.getBody());
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
