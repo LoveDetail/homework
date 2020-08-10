@@ -23,6 +23,6 @@ public class MyFilter2 implements Filter {
 
     @Override
     public void destroy() {
-        System.out.println("Filter 销毁====2");
+//        System.out.println("Filter 销毁====2");
     }
 }
