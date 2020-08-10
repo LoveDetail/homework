@@ -1,4 +1,4 @@
-package com.gp.homework.config;
+package com.gp.homework.config.aspect;
 
 import cn.hutool.core.util.StrUtil;
 import com.common.annotation.NoRepeatSubmit;
@@ -52,7 +52,7 @@ public class RepeatSubmitAspect {
                result = pjp.proceed() ;
             }
             finally {
-                log.info("releaseLock {},key=[{}],valueUUID = [{}]",redisUtil.releaseLock(key,requestId) == true ? "success" : "faild",key,requestId);
+                log.info("releaseLock {},key=[{}],valueUUID = [{}]", redisUtil.releaseLock(key, requestId) ? "success" : "faild",key,requestId);
             }
             return result ;
         }
