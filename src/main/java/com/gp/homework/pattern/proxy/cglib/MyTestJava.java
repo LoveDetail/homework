@@ -1,24 +1,17 @@
 package com.gp.homework.pattern.proxy.cglib;
 
+import com.gp.homework.common.util.ByteUtil;
+
 import java.util.Comparator;
 
 public class MyTestJava {
 
-	private static int diff = -100 ;
-
-	private static String testStr = "Liliwei" ;
-
 	public static void main(String[] args) {
+		byte[] bytes = new byte[]{0,0,0x19,0x2C} ;
+		System.out.println(ByteUtil.bytesToFloat(bytes, false));
 
-
-
-
-		System.out.println(diff > 0 ? 1 : diff == 0 ? 0 : -1);
-
-		System.out.println(testStr.equals("A") ? "right" : testStr.equals("Liliwei") ? "wrong" : "noResult");
-
-		CompareObject compare = new CompareObject() ;
-		System.out.println(compare.compare(1, 2));
+		System.out.println(ByteUtil.bytesToInt(bytes, false));
+		System.out.println(Float.intBitsToFloat(6444));
 
 	}
 

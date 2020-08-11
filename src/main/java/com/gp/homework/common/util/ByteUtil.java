@@ -13,6 +13,25 @@ import java.util.regex.Pattern;
 
 public class ByteUtil {
 
+
+    public static float bytesToFloat(byte[] b,boolean beReverse) {
+
+//        byte[] targetBytes = beReverse ?  reverse(b) : b ;
+//        byte[] sourceBytes = new byte[]{0,0,0,0} ;
+
+
+
+
+        int accum = 0;
+        accum = accum|(b[0] & 0xff) << 0;
+        accum = accum|(b[1] & 0xff) << 8;
+        accum = accum|(b[2] & 0xff) << 16;
+        accum = accum|(b[3] & 0xff) << 24;
+        System.out.println(accum);
+        return Float.intBitsToFloat(accum);
+    }
+
+
     /**
      * 一个short是两个字节，把一个short类型的书转化为byte[]长度为2的数字返回，beReverse表示是否翻转高低位，如果为true，则低位在前返回
      * C

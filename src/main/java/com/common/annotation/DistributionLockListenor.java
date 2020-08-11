@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface DistributionLockLisenor {
+public @interface DistributionLockListenor {
 
     /**
      * 锁的有效时间，单位为秒，默认值为2
