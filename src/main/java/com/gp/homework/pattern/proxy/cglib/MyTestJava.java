@@ -1,17 +1,25 @@
 package com.gp.homework.pattern.proxy.cglib;
 
-import com.gp.homework.common.util.ByteUtil;
+import com.gp.homework.common.XmlFileLoader;
+import com.gp.homework.config.xmlconfig.StatusConfig;
 
 import java.util.Comparator;
 
 public class MyTestJava {
 
 	public static void main(String[] args) {
-		byte[] bytes = new byte[]{0,0,0x19,0x2C} ;
-		System.out.println(ByteUtil.bytesToFloat(bytes, false));
+//		byte[] bytes = new byte[]{0,0,0x19,0x2C} ;
+//		System.out.println(ByteUtil.bytesToFloat(bytes, false));
+//
+//		System.out.println(ByteUtil.bytesToInt(bytes, false));
+//		System.out.println(Float.intBitsToFloat(6444));
 
-		System.out.println(ByteUtil.bytesToInt(bytes, false));
-		System.out.println(Float.intBitsToFloat(6444));
+
+		String path = "xmlFile/StatusConfig_1280.xml" ;
+
+		StatusConfig config_= XmlFileLoader.loadXmlFileToEntity(path, StatusConfig.class) ;
+
+		System.out.println(config_);
 
 	}
 
