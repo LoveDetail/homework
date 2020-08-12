@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--1280状态信息配置文件-->
+<Config>
+    <!--应用类型-->
+    <appType>1280</appType>
+    <!--设备名称-->
+    <deviceName>电磁阀</deviceName>
+
+    <!--状态信息码-->
+    <sequence>1,2,3,14,5,8</sequence>
+
+    <!--状态字节占位长度-->
+    <lenlist>1,1,1,2,2,1</lenlist>
+
+    <!---->
+    <stenList>
+        <!--基本状态-->
+        <StatusEntity stnm="boxDoor" stplace="1"></StatusEntity>
+        <StatusEntity stnm="capStatus" stplace="2"></StatusEntity>
+        <StatusEntity stnm="soakWater" stplace="3"></StatusEntity>
+        <!--供电状态-->
+        <StatusEntity stnm="powerType" stplace="0"></StatusEntity>
+        <StatusEntity stnm="stopElec" stplace="1"></StatusEntity>
+        <StatusEntity stnm="chargeElec" stplace="2"></StatusEntity>
+        <StatusEntity stnm="batteryStatus" stplace="5,6,7"></StatusEntity>
+        <!--网络状态-->
+        <StatusEntity stnm="operation" stplace="0,1"></StatusEntity>
+        <StatusEntity stnm="netType" stplace="2,3,4"></StatusEntity>
+        <StatusEntity stnm="netQuality" stplace="5,6,7"></StatusEntity>
+        <!--电磁阀状态-->
+        <StatusEntity stnm="valveA" stplace="0,1"></StatusEntity>
+        <StatusEntity stnm="valveB" stplace="2,3"></StatusEntity>
+        <StatusEntity stnm="maADX" stplace="4"></StatusEntity>
+        <StatusEntity stnm="maBDX" stplace="5"></StatusEntity>
+        <StatusEntity stnm="svCurrPositon" stplace="8,9,10,11,12,13,14,15"></StatusEntity>
+        <!--计量状态-->
+        <StatusEntity stnm="meStatus" stplace="0"></StatusEntity>
+        <StatusEntity stnm="meUser" stplace="1"></StatusEntity>
+        <StatusEntity stnm="meEffectWater" stplace="2,3,4"></StatusEntity>
+        <StatusEntity stnm="meOvertake" stplace="5"></StatusEntity>
+        <!--传感器状态-->
+        <StatusEntity stnm="ssWaterLevel1" stplace="0,1"></StatusEntity>
+        <StatusEntity stnm="ssPressLevel1" stplace="2,3"></StatusEntity>
+
+    </stenList>
+
+</Config>
