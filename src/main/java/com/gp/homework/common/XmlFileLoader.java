@@ -1,6 +1,5 @@
 package com.gp.homework.common;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 
 import javax.xml.bind.JAXBContext;
@@ -8,7 +7,6 @@ import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-@Slf4j
 public class XmlFileLoader {
 
     /**

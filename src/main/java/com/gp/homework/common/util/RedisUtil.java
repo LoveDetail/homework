@@ -24,22 +24,22 @@ public class RedisUtil {
     /**
      * 尝试获取分布式锁
      * @param lockKey 锁
-     * @param uuid 请求标识
+     * @param requestId 请求标识
      * @param expireMillis 超期时间
      * @return 是否获取成功
      */
-    public boolean tryLock(String lockKey, String uuid, int expireMillis) {
-        return redisTemplate.opsForValue().setIfAbsent(lockKey,uuid,Duration.ofMillis(expireMillis));
+    public boolean tryLock(String lockKey, String requestId, int expireMillis) {
+        return redisTemplate.opsForValue().setIfAbsent(lockKey,requestId,Duration.ofMillis(expireMillis));
     }
 
     /**
      * 释放分布式锁
      * @param lockKey 锁
-     * @param valueUUID value值，每个请求或者现成分配一个UUID，现成之间不可重复
+     * @param valueUUID value值，每个请求或者现成分配一个UUID，线程之间不可重复
      * @return 是否释放成功
      */
     public boolean releaseLock(String lockKey, String valueUUID) {
-        return (Long)redisTemplate.execute(RedisScript.of("if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end",Long.class), Arrays.asList(lockKey),valueUUID) >= 1 ? true : false ;
+        return (Long)redisTemplate.execute(RedisScript.of("if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end",Long.class), Arrays.asList(lockKey),valueUUID) < 1 ? false : true ;
     }
 
     /**
