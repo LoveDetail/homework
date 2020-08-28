@@ -38,6 +38,34 @@ Scotland were ahead in their European championship qualifier in Iceland
 
 
 
+5、obvious 英 [ˈɒbviəs] 美 [ˈɑːbviəs] adj. 明显的; 显然的; 易理解的; 公认的; 当然的; 平淡无奇的; 无创意的; 因显而易见而不必要的 ;
+
+```.java
+Determining how the Democratic challenger would conduct his presidency isn't quite so obvious.
+这位民主党挑战者将如何履行总统职务还不能明确判断
+```
+
+
+
+6、barrier 英 [ˈbæriə(r)] 美 [ˈbæriər] n.屏障; 障碍物; 障碍; 阻力; 关卡; 分界线; 隔阂;   复数：barriers 
+
+```.java
+Duties and taxes are the most obvious barrier to free trade.
+关税和税收是自由贸易的最大壁垒。
+```
+
+
+
+7、reach 	英 [riːtʃ] 美 [riːtʃ] v. 到达; 抵达; 引起…的注意; 增加到，提升到(某一水平、速度等);
+n. 手臂展开的长度; 臂展; 波及范围; 影响范围; 河段; 直水道;
+
+[其他] 	第三人称单数：reaches 现在分词：reaching 过去式：reached 过去分词：reached 
+
+```..java
+He did not stop until he reached the door
+他走到门边才停下。
+```
+
 
 
 

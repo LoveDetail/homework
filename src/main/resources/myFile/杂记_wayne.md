@@ -26,7 +26,7 @@ typora-root-url: pic
 | 12   | DoubleToIntFunction     | 接受一个double类型输入，返回一个int类型结果。                |
 | 13   | DoubleToLongFunction    | 接受一个double类型输入，返回一个long类型结果                 |
 | 14   | DoubleUnaryOperator     | 接受一个参数同为类型double,返回值类型也为double 。           |
-| 15   | Function<T,R>           | 接受一个输入参数，返回一个结果。                             |
+| 15   | Function<T,R>           | 接受一个输入参数T，返回一个结果R。                           |
 | 16   | IntBinaryOperator       | 接受两个参数同为类型int,返回值类型也为int 。                 |
 | 17   | IntConsumer             | 接受一个int类型的输入参数，无返回值 。                       |
 | 18   | IntFunction<R>          | 接受一个int类型输入参数，返回一个结果 。                     |
@@ -47,7 +47,7 @@ typora-root-url: pic
 | 33   | ObjIntConsumer<T>       | 接受一个object类型和一个int类型的输入参数，无返回值。        |
 | 34   | ObjLongConsumer<T>      | 接受一个object类型和一个long类型的输入参数，无返回值。       |
 | 35   | Predicate<T>            | 接受一个输入参数，返回一个布尔值结果。                       |
-| 36   | Supplier<T>             | 无参数，返回一个结果。                                       |
+| 36   | Supplier<T>             | 无参数，返回一个结果T。                                      |
 | 37   | ToDoubleBiFunction<T,U> | 接受两个输入参数，返回一个double类型结果                     |
 | 38   | ToDoubleFunction<T>     | 接受一个输入参数，返回一个double类型结果                     |
 | 39   | ToIntBiFunction<T,U>    | 接受两个输入参数，返回一个int类型结果。                      |
@@ -276,7 +276,7 @@ WHERE a.omoid BETWEEN 0 AND 300
 GROUP BY c.addvcd  HAVING a.addvcd > 0 ORDER BY a.omoid DESC
 ```
 
-![1561867977627](C:\Users\sks\AppData\Local\Temp\1561867977627.png)
+![image-20200819131153445](/../杂记_wayne/image-20200819131153445.png)
 
 
 
@@ -628,7 +628,7 @@ IO分两阶段（一旦拿到数据后就变成了数据操作，不再是IO）�
 
 
 
-### 17.1.6 四种组合方式
+### 7.1.6 四种组合方式
 
 ```.java
 同步阻塞方式(阿呆等水开)：
@@ -1040,6 +1040,25 @@ IO分两阶段（一旦拿到数据后就变成了数据操作，不再是IO）�
  */
 
 ```
+
+## 8.16  MobaXterm
+
+```.java
+┌────────────────────────────────────────────────────────────────────┐
+│                          MobaXterm 20.2                            │
+│            (SSH client, X-server and networking tools)             │
+│                                                                    │
+│  SSH session to wayne@121.36.48.218                                │
+│   · SSH compression √ :                                            │
+│   · SSH-browser     √ :                                            │
+│   · X11-forwarding  × :  (disabled or not supported by server)     │
+│   · DISPLAY           : 192.168.2.52:0.0                           │
+│                                   ::::::::::Liliwei                │
+│   For more info, ctrl+click on help or visit our website           │
+└────────────────────────────────────────────────────────────────────┘
+```
+
+
 
 # 9 咕泡学院资源汇总
 
@@ -1881,6 +1900,10 @@ public class PersonServiceImpl implements PersonService {
 ```
 
 
+
+## 18.2 springboot打包瘦身
+
+参考：https://www.cnblogs.com/kingsonfu/p/11431743.html
 
 
 
