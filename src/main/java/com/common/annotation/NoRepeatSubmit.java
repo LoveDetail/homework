@@ -14,6 +14,7 @@ public @interface NoRepeatSubmit {
 
     /**
      * 锁的有效时间，单位为秒，默认值为2
+     *
      * @return
      */
     int timeInSecond() default 2;
